@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    overflow: hidden;
+    font-family: "Rubik", sans-serif;
+}
+
+button, input {
+    font-family: "Rubik", sans-serif;
+}
+
+/* Dashboard layout setup */
+.dashboard-container {
+    display: flex;
+}
+
+.category-container {
+    width: 250px;
+    height: 100vh;
+    border-right: 1px solid #c3c3c3;
+}
+
+.product-container {
+    height: 100vh;
+    width: calc(100vw - 700px);
+    border-right: 1px solid #c3c3c3;
+}
+
+.billing-container {
+    height: 100vh;
+    width: 450px;
+}
+
+/* Custom Scroll Design ---> Scroll_Bar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    background-color: #eee;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #adadad;
+    border-radius: 5px;
+}
+
+/* Category container style */
+.logo {
+    text-align: center;
+    background-color: #f0db4f;
+    font-size: 15px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.categories {
+    padding: 10px;
+    overflow-y: auto;
+    height: calc(100vh - 80px)
+}
+
+.categories button {
+    width: 100%;
+    text-align: start;
+    background-color: transparent;
+    border: none;
+    margin-bottom: 5px;
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 5px;
+    transition: .4s;
+    cursor: pointer;
+}
+
+.categories button:hover {
+    background-color: #f0db4f;
+}
+
+.search-wrapper {
+    padding: 0 20px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #c3c3c3;
+}
+
+/* Product container style */
+
+.search-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.search-box .toggle-menu {
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    display: none;
+}
+
+.search-box .new-billing-btn {
+    background-color: #f0db4f;
+    border: none;
+    width: 100px;
+    padding: 10px;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.search-box input {
+    width: calc(100% - 150px);
+    padding: 8px;
+    border-radius: 50px;
+    border: 1px solid #969696;
+    outline-color: #f0db4f;
+}
+
+.product {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid #c3c3c3;
+    border-radius: 5px
+}
+
+.product-img {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.product img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.product .product-name {
+    font-size: 15px;
+    color: #717171;
+    font-weight: 500;
+    margin-bottom: 5px;
+    padding-right: 5px;
+} 
+
+.product-details span {
+    font-size: 13px;
+    color: #717171;
+}
+
+.product-wrapper {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 100px);
+}
+
+.product.active {
+    background-color: #00d500;
+}
+
+.product.active .product-name {
+    color: #fff;
+}
+
+.product.active span {
+    color: #fff;
+}
+
+/* Billing Section  */
+
+.billing-title {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    border-bottom: 1px solid #c3c3c3;
+}
+
+.save-btn button {
+    width: 100%;
+    background-color: #f0db4f;
+    border: none;
+    padding: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    height: 40px;
+}
+
+.billing-items {
+    height: calc(100vh - 100px);
+    border: 1px solid red;
+}
