@@ -118,7 +118,7 @@ button, input {
 
 .search-box input {
     width: calc(100% - 150px);
-    padding: 8px;
+    padding: 8px 20px;
     border-radius: 50px;
     border: 1px solid #969696;
     outline-color: #f0db4f;
@@ -202,5 +202,178 @@ button, input {
 
 .billing-items {
     height: calc(100vh - 100px);
-    border: 1px solid red;
+}
+
+.qty-box {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.qty-box input {
+    width: 40px;
+    padding: 5px;
+    border: none;
+    background-color: #ededed;
+    text-align: center;
+}
+
+.qty-box button {
+    padding: 5px;
+    background-color: #f0db4f;
+    border: none;
+}
+
+.items table td {
+    padding: 5px;
+    font-size: 14px;
+}
+
+.items table td:nth-child(1) {
+    width: 55%;
+}
+
+.items table td:nth-child(2) {
+    width: 15%;
+    text-align: center;
+}
+
+.items table td:nth-child(3) {
+    width: 15%;
+    text-align: center;
+}
+
+.items table td:nth-child(4) {
+    width: 15%;
+    text-align: center;
+}
+
+.items table td:nth-child(1) p {
+    margin-bottom: 5px;
+}
+
+.items table td:nth-child(1) span {
+    font-size: 13px;
+    color: #717171;
+}
+
+.trash-bin {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.trash-bin:hover {
+    background-color: red;
+    color: #fff;
+}
+
+.billing-calculation {
+
+    padding: 10px;
+    border-top: 1px solid #c3c3c3;
+}
+
+.billing-calculation table td,
+.billing-calculation table th {
+    padding: 8px;
+    border: 1px solid #e1e1e1;
+}
+
+.billing-calculation table th {
+    text-align: start;
+    font-weight: 500;
+}
+
+.billing-calculation table td {
+    text-align: end;
+}
+
+.billing-calculation table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.billing-calculation table input {
+    padding: 5px;
+    outline-color: #f0db4f;
+}
+
+/* To make responsive to 1024 */
+@media screen and (max-width:1024.9px) {
+    .dashboard-container {
+        display: block;
+        height: auto;
+    }
+
+    .category-container {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        z-index: 1;
+        background-color: #fff;
+        transition: .4s;
+    }
+
+     .product-container {
+        width: 100%;
+        height: auto;
+    }
+
+     .product-wrapper {
+        height: auto;
+    }
+
+     .billing-container {
+        height: auto;
+        width: 100%;
+    }
+
+    body {
+        overflow-y: auto;
+    }
+
+     .billing-items {
+        height: auto;
+    }
+
+    .search-box .toggle-menu {
+        display: block;
+    }
+
+     .search-box input {
+        width: calc(100% - 200px);
+    }
+
+    .search-wrapper {
+        position: fixed;
+        width: 100%;
+        background-color: #fff;
+        padding: 0;
+    }
+
+    .search-box {
+        padding: 0 20px;
+    }
+
+     .product-wrapper {
+        padding-top: 80px;
+    }
+}
+
+/* To make responsive to 524 */
+@media screen and (max-width:556.9px) {
+    .product-wrapper{
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .product .product-name {
+        font-size: 14px;
+    }
 }
