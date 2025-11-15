@@ -82,6 +82,10 @@ button, input {
     background-color: #f0db4f;
 }
 
+.categories button.active {
+    background-color: #f0db4f;
+}
+
 .search-wrapper {
     padding: 0 20px;
     height: 60px;
@@ -163,7 +167,7 @@ button, input {
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
     overflow-y: auto;
-    height: calc(100vh - 100px);
+    max-height: calc(100vh - 100px);
 }
 
 .product.active {
@@ -319,6 +323,10 @@ button, input {
         z-index: 1;
         background-color: #fff;
         transition: .4s;
+    }
+
+    .category-container.show {
+        left: 0;
     }
 
      .product-container {
