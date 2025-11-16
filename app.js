@@ -14,6 +14,7 @@ document.addEventListener("click", (e) => {
 function initBilling() {
   getAllCategory();
   getProducts("all");
+  localStorage.clear();
 }
 
 window.onload = () => {
@@ -54,7 +55,7 @@ function createProductBox(products) {
   let productBoxHtmlStr = "";
 
   products.forEach((singleProduct) => {
-    productBoxHtmlStr += `<div class="product" onclick="selectProduct(${singleProduct.id}, this)">
+    productBoxHtmlStr += `<div class="product" data-product="${singleProduct.id}" onclick="selectProduct(${singleProduct.id}, this)">
             <div class="product-img">
               <img src="${singleProduct.thumbnail}" alt="" />
             </div>
@@ -86,7 +87,7 @@ async function searchProduct(searchQuery) {
 }
 
 async function selectProduct(productId, productBox) {
-  let req = await fetch(`https://dummyjson.com/products/${productId}, this`);
+  let req = await fetch(`https://dummyjson.com/products/${productId}`);
   let response = await req.json();
 
   const { id, title, price } = response;
@@ -114,4 +115,48 @@ async function selectProduct(productId, productBox) {
   productBox.classList.add("active");
 
   // Creating Billing Section
+
+  let selectedItems = document.getElementById("selected-items");
+  let tr = document.createElement("tr");
+
+  tr.innerHTML = `
+  <td>
+    <p class="product-name">${title}</p>
+    <span>Price: ₹${price}</span>
+  </td>
+  <td>
+    <div class="qty-box">
+      <button type="button">
+        <i class="ri-subtract-line"></i>
+      </button>
+      <input type="text" value="1" readonly />
+      <button type="button">
+        <i class="ri-add-line"></i>
+      </button>
+    </div>
+  </td>
+  <td>₹${price}</td>
+  <td>
+    <button type="button" class="trash-bin" onclick="removeSelectedItem(${id},this)">
+      <i class="ri-delete-bin-line"></i>
+    </button>
+  </td>
+`;
+  selectedItems.append(tr);
+}
+
+function removeSelectedItem(productId, deleteBtn) {
+  let selectedProducts = localStorage.getItem(`selectedProducts`);
+  selectedProducts = JSON.parse(selectedProducts);
+
+  let newProductList = selectedProducts.filter(
+    (product) => product.id != productId
+  );
+  localStorage.setItem("selectedProducts", JSON.stringify(newProductList));
+  deleteBtn.closest("tr").remove();
+
+  let productBox = document.querySelector(
+    `.product[data-product="${productId}"]`
+  );
+  productBox.classList.remove("active");
 }
