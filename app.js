@@ -54,7 +54,7 @@ function createProductBox(products) {
   let productBoxHtmlStr = "";
 
   products.forEach((singleProduct) => {
-    productBoxHtmlStr += `<div class="product">
+    productBoxHtmlStr += `<div class="product" onclick="selectProduct(${singleProduct.id}, this)">
             <div class="product-img">
               <img src="${singleProduct.thumbnail}" alt="" />
             </div>
@@ -83,4 +83,35 @@ async function searchProduct(searchQuery) {
 
   let products = response.products;
   createProductBox(products);
+}
+
+async function selectProduct(productId, productBox) {
+  let req = await fetch(`https://dummyjson.com/products/${productId}, this`);
+  let response = await req.json();
+
+  const { id, title, price } = response;
+
+  let selectedProducts = localStorage.getItem(`selectedProducts`);
+
+  if (selectedProducts) {
+    selectedProducts = JSON.parse(selectedProducts);
+  } else {
+    selectedProducts = [];
+  }
+
+  let checkData = selectedProducts.find((product) => product.id === id);
+
+  if (!checkData) {
+    selectedProducts.push({
+      id,
+      title,
+      price,
+      qty: 1,
+    });
+  }
+
+  localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+  productBox.classList.add("active");
+
+  // Creating Billing Section
 }
