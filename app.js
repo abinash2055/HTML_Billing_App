@@ -15,6 +15,9 @@ function initBilling() {
   getAllCategory();
   getProducts("all");
   localStorage.clear();
+  document.getElementById("selected-items").innerHTML = "";
+  document.getElementById("total-product").innerHTML = 0;
+  document.getElementById("total-amount").innerHTML = "₹0";
 }
 
 window.onload = () => {
@@ -25,10 +28,10 @@ async function getAllCategory() {
   let req = await fetch("https://dummyjson.com/products/categories");
   let response = await req.json();
 
-  let categoryBtn = `<button type="button" class='active' onclick="getProductByCategory('all',event)">All Categories</button>`;
+  let categoryBtn = `<button type="button" class='active' onclick="getProductByCategory('all',event)" >All Categories</button>`;
 
   response.forEach((category) => {
-    categoryBtn += `<button type="button" onclick="getProductByCategory('${category.slug}',event)">${category.name}</button>`;
+    categoryBtn += `<button type="button"  onclick="getProductByCategory('${category.slug}',event)" >${category.name}</button>`;
   });
 
   document.querySelector(".categories").innerHTML = categoryBtn;
@@ -92,57 +95,54 @@ async function selectProduct(productId, productBox) {
 
   const { id, title, price } = response;
 
-  let selectedProducts = localStorage.getItem(`selectedProducts`);
-
-  if (selectedProducts) {
-    selectedProducts = JSON.parse(selectedProducts);
-  } else {
-    selectedProducts = [];
+  // 🔥 Prevent double row insert
+  if (document.querySelector(`#selected-items tr[data-id="${id}"]`)) {
+    return;
   }
+
+  let selectedProducts = localStorage.getItem(`selectedProducts`);
+  selectedProducts = selectedProducts ? JSON.parse(selectedProducts) : [];
 
   let checkData = selectedProducts.find((product) => product.id === id);
 
   if (!checkData) {
-    selectedProducts.push({
-      id,
-      title,
-      price,
-      qty: 1,
-    });
+    selectedProducts.push({ id, title, price, qty: 1 });
   }
 
   localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
   productBox.classList.add("active");
 
-  // Creating Billing Section
-
+  // Create table row
   let selectedItems = document.getElementById("selected-items");
   let tr = document.createElement("tr");
+  tr.setAttribute("data-id", id); // << important
 
   tr.innerHTML = `
-  <td>
-    <p class="product-name">${title}</p>
-    <span>Price: ₹${price}</span>
-  </td>
-  <td>
-    <div class="qty-box">
-      <button type="button">
-        <i class="ri-subtract-line"></i>
+    <td>
+      <p class="product-name">${title}</p>
+      <span>Price: ₹${price}</span>
+    </td>
+    <td>
+      <div class="qty-box">
+        <button type="button" onclick="updateQty('desc', ${id}, this)">
+          <i class="ri-subtract-line"></i>
+        </button>
+        <input type="text" value="1" readonly />
+        <button type="button" onclick="updateQty('inc', ${id}, this)">
+          <i class="ri-add-line"></i>
+        </button>
+      </div>
+    </td>
+    <td>₹${price}</td>
+    <td>
+      <button type="button" class="trash-bin" onclick="removeSelectedItem(${id},this)">
+        <i class="ri-delete-bin-line"></i>
       </button>
-      <input type="text" value="1" readonly />
-      <button type="button">
-        <i class="ri-add-line"></i>
-      </button>
-    </div>
-  </td>
-  <td>₹${price}</td>
-  <td>
-    <button type="button" class="trash-bin" onclick="removeSelectedItem(${id},this)">
-      <i class="ri-delete-bin-line"></i>
-    </button>
-  </td>
-`;
+    </td>
+  `;
   selectedItems.append(tr);
+
+  calculateAmount();
 }
 
 function removeSelectedItem(productId, deleteBtn) {
@@ -159,4 +159,66 @@ function removeSelectedItem(productId, deleteBtn) {
     `.product[data-product="${productId}"]`
   );
   productBox.classList.remove("active");
+
+  calculateAmount();
+}
+
+function calculateAmount() {
+  let selectedProducts = localStorage.getItem("selectedProducts");
+  selectedProducts = JSON.parse(selectedProducts);
+
+  let totalProduct = selectedProducts.length;
+  let totalAmount = 0;
+
+  selectedProducts.forEach((product) => {
+    totalAmount += product.price * product.qty;
+  });
+
+  document.getElementById("total-product").innerHTML = totalProduct;
+  document.getElementById("total-amount").innerHTML = `₹${totalAmount.toFixed(
+    2
+  )}`;
+}
+
+function updateQty(inc_or_desc, productId, qtyBtn) {
+  let selectedProducts = localStorage.getItem("selectedProducts");
+  selectedProducts = JSON.parse(selectedProducts);
+
+  let getProduct = selectedProducts.find((product) => product.id === productId);
+
+  if (inc_or_desc === "inc") {
+    getProduct.qty++;
+  } else {
+    if (getProduct.qty > 1) {
+      getProduct.qty--;
+    }
+  }
+
+  localStorage.setItem("selectedProducts", JSON.stringify(selectedProducts));
+
+  let qtyTd = qtyBtn.closest("td");
+
+  let qtyInput = qtyTd.querySelector("input");
+  qtyInput.value = getProduct.qty;
+  let priceTd = qtyTd.nextElementSibling;
+  priceTd.innerHTML = `₹${(getProduct.qty * getProduct.price).toFixed(2)}`;
+
+  calculateAmount();
+}
+
+function saveBilling() {
+  let phoneNumber = document.querySelector("input[name='phoneNumber']");
+  let selectedProducts = localStorage.getItem("selectedProducts");
+  if (!phoneNumber.value) {
+    alert("Please enter customer phone number");
+    return;
+  }
+
+  if (selectedProducts === null) {
+    alert("Please choose at least 1 product for billing");
+    return;
+  }
+
+  localStorage.setItem("phoneNumber", phoneNumber.value);
+  window.open("receipt.html", "Receipt", "width=500;height=500");
 }

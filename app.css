@@ -51,7 +51,7 @@ button, input {
 /* Category container style */
 .logo {
     text-align: center;
-    background-color: #f0db4f;
+    background-color: #bb83f0;
     font-size: 15px;
     height: 60px;
     display: flex;
@@ -79,11 +79,11 @@ button, input {
 }
 
 .categories button:hover {
-    background-color: #f0db4f;
+    background-color: #bb83f0;
 }
 
 .categories button.active {
-    background-color: #f0db4f;
+    background-color: #bb83f0;
 }
 
 .search-wrapper {
@@ -112,7 +112,7 @@ button, input {
 }
 
 .search-box .new-billing-btn {
-    background-color: #f0db4f;
+    background-color: #bb83f0;
     border: none;
     width: 100px;
     padding: 10px;
@@ -125,7 +125,7 @@ button, input {
     padding: 8px 20px;
     border-radius: 50px;
     border: 1px solid #969696;
-    outline-color: #f0db4f;
+    outline-color: #bb83f0;
 }
 
 .product {
@@ -194,7 +194,7 @@ button, input {
 
 .save-btn button {
     width: 100%;
-    background-color: #f0db4f;
+    background-color: #bb83f0;
     border: none;
     padding: 10px;
     font-size: 15px;
@@ -205,6 +205,10 @@ button, input {
 }
 
 .billing-items {
+    /* added */
+    display: flex;  
+    /* added */
+    flex-direction: column;   
     height: calc(100vh - 100px);
 }
 
@@ -225,8 +229,14 @@ button, input {
 
 .qty-box button {
     padding: 5px;
-    background-color: #f0db4f;
+    background-color: #bb83f0;
     border: none;
+}
+
+.items {
+    flex: 1;
+    overflow-y: auto;   /* <-- scrollable billing list */
+    padding-right: 5px; /* prevents cutoff near scrollbar */
 }
 
 .items table td {
@@ -306,7 +316,7 @@ button, input {
 
 .billing-calculation table input {
     padding: 5px;
-    outline-color: #f0db4f;
+    outline-color: #bb83f0;
 }
 
 /* To make responsive to 1024 */
@@ -373,6 +383,11 @@ button, input {
      .product-wrapper {
         padding-top: 80px;
     }
+
+    .items {
+        max-height: 300px;
+        overflow-y: auto;
+    }
 }
 
 /* To make responsive to 524 */
@@ -384,4 +399,72 @@ button, input {
     .product .product-name {
         font-size: 14px;
     }
+}
+
+
+
+/* receipt style  */
+.receipt-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 0;
+}
+
+.receipt-wrapper {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #eee;
+}
+
+.receipt-wrapper .header {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.receipt-wrapper .header h1 {
+    margin-bottom: 5px;
+}
+
+.receipt-wrapper .customer-details p {
+    margin: 5px 0;
+}
+
+.receipt-wrapper .customer-details,
+.receipt-wrapper .total-amount {
+    margin: 10px 0;
+}
+
+.receipt-wrapper .product-details table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.receipt-wrapper .product-details th,
+.receipt-wrapper .product-details td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.receipt-wrapper .product-details th {
+    background-color: #f2f2f2;
+}
+
+.receipt-wrapper .footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.print-button {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.print-button button {
+    background-color: #bb83f0;
+    border: none;
+    outline: none;
+    padding: 10px;
 }

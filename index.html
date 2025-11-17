@@ -36,7 +36,13 @@
               placeholder="Search here..."
               oninput="searchProduct(this.value)"
             />
-            <button type="button" class="new-billing-btn">New Billing</button>
+            <button
+              type="button"
+              class="new-billing-btn"
+              onclick="initBilling()"
+            >
+              New Billing
+            </button>
           </div>
         </div>
 
@@ -73,7 +79,7 @@
           </div>
         </div>
         <div class="save-btn">
-          <button type="button">Save</button>
+          <button type="button" onclick="saveBilling()">Save</button>
         </div>
       </div>
     </main>
